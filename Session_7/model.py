@@ -40,9 +40,9 @@ def test_model(model, test_loader, device, test_acc, test_losses):
     for data, target in test_loader:
       data, target = data.to(device), target.to(device)
       output = model(data)
-      test_loss += F.nll_losses(output, target, reduction="sum").item()
+      test_loss += F.nll_loss(output, target, reduction="sum").item()
       pred = output.argmax(dim=1, keepdim=True)
-      correct += pred.eq(target.view_as(perd)).sum().item()
+      correct += pred.eq(target.view_as(pred)).sum().item()
 
   test_loss /= len(test_loader.dataset)
   test_acc.append(100*correct/len(test_loader.dataset))
